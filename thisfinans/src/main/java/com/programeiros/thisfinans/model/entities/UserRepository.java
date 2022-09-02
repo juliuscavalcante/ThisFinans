@@ -1,6 +1,6 @@
-package com.programeiros.thisfinans.controller;
+package com.programeiros.thisfinans.model.entities;
 
-import com.programeiros.thisfinans.model.entities.User;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

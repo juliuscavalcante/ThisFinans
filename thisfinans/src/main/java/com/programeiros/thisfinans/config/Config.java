@@ -1,7 +1,6 @@
 package com.programeiros.thisfinans.config;
 
-import com.programeiros.thisfinans.controller.UserRepository;
-import com.programeiros.thisfinans.model.entities.User;
+import com.programeiros.thisfinans.model.entities.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
