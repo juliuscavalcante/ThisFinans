@@ -1,5 +1,5 @@
 # ThisFinans
-[![NPM](https://img.shields.io/npm/l/react)](https://github.com/Programeiros/thisfinans/blob/develop/LICENSE) 
+[![NPM](https://shields.io/badge/license-GPL-blue)](https://github.com/Programeiros/thisfinans/blob/develop/LICENSE) 
 
 # Sobre o projeto
 
