@@ -1,17 +1,14 @@
 package com.programeiros.thisfinans.model.entities;
 
-
-import com.programeiros.thisfinans.model.entities.ENUM.TypeUser;
+import com.programeiros.thisfinans.model.entities.ENUM.TypeAccount;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Entity
 @AllArgsConstructor
@@ -20,35 +17,37 @@ import java.util.List;
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
-public class User implements Serializable {
+public class Account implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
+    @NonNull
     @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NonNull
-    private String userAccount;
-
+    private String accountCod;
     @NonNull
-    private String userName;
+    private String name;
     @NonNull
-    private String password;
-    @NonNull
-    @Email
-    private String email;
-    @NonNull
-    private TypeUser typeUser;
+    private TypeAccount typeAccount;
     @NonNull
     private Boolean status;
     @NonNull
     private Instant createDate;
+    @NonNull
     private Instant updateDate;
 
-    @OneToMany(mappedBy = "user")
+
+    @ManyToOne
+    @JoinColumn(name = "user_fk")
+    private User user;
+
+    @OneToMany(mappedBy = "account")
     @Setter(AccessLevel.NONE)
-    List<Account> accounts = new ArrayList<>();
+    List<Transactions> Transactions = new ArrayList<>();
 }
+
