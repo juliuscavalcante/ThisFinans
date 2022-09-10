@@ -1,76 +1,62 @@
 package com.programeiros.thisfinans.model.entities;
 
-
-import com.programeiros.thisfinans.model.entities.ENUM.TypeUser;
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.List;
 import java.util.UUID;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 
 @Entity
-@Table(name = "users")
+@Table(name = "transaction_entries")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Builder
-public class User implements Serializable {
+public class TransactionEntries implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 2694266116540907321L;
+    private static final long serialVersionUID = -5722327047262350956L;
 
+    @NonNull
+    @EqualsAndHashCode.Include
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
     private Long id;
 
-    @Column(name = "user_cod", nullable = false)
+    @NonNull
     private UUID cod;
-
-    @Column(nullable = false)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
-
-    @Email
-    @Column(nullable = false)
-    private String email;
-
-    @Column(nullable = false)
-    @NotNull
-    private TypeUser type;
-
-    @Column(nullable = false)
-    private Boolean status;
-
-    @Column(name = "create_date", nullable = false)
+    @NonNull
+    private BigDecimal amount;
+    @NonNull
+    private Instant entriesDate;
+    @NonNull
     private Instant createDate;
 
-
-    @Column(name = "update_date")
     private Instant updateDate;
 
-    @OneToMany(mappedBy = "user")
-    @Setter(AccessLevel.NONE)
-    private List<Account> accounts;
+    @ManyToOne
+    @JoinColumn(name = "transaction_fk")
+    private Transactions transactions;
+
+    @ManyToOne
+    @JoinColumn(name = "account_fk")
+    private Account accountEntries;
 
     @Override
     public int hashCode() {
