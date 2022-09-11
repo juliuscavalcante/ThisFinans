@@ -1,6 +1,6 @@
 package com.programeiros.thisfinans.model.entities.ENUM;
 
-public enum TypeTransactions {
+public enum TransactionsType {
     EXPENSES,
     REVENUE
 }

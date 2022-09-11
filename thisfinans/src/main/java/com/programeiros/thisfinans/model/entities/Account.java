@@ -1,6 +1,6 @@
 package com.programeiros.thisfinans.model.entities;
 
-import com.programeiros.thisfinans.model.entities.ENUM.TypeAccount;
+import com.programeiros.thisfinans.model.entities.ENUM.AccountType;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -46,9 +48,10 @@ public class Account implements Serializable {
     private String name;
 
     @Column(nullable = false)
-    private TypeAccount type;
+    @Enumerated(EnumType.STRING)
+    private AccountType type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private Boolean status;
 
     @Column(name = "create_date", nullable = false)
@@ -63,11 +66,11 @@ public class Account implements Serializable {
 
     @OneToMany(mappedBy = "accountTransactions")
     @Setter(AccessLevel.NONE)
-    List<Transactions> Transactions;
+    private List<Transactions> Transactions;
 
     @OneToMany(mappedBy = "accountEntries")
     @Setter(AccessLevel.NONE)
-    List<TransactionEntries> transactionEntries;
+    private List<TransactionEntries> transactionEntries;
 
     @Override
     public int hashCode() {

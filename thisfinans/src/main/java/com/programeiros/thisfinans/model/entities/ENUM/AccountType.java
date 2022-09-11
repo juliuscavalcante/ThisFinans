@@ -1,6 +1,6 @@
 package com.programeiros.thisfinans.model.entities.ENUM;
 
-public enum TypeAccount {
+public enum AccountType {
     WALLET,
     SAVINGS,
     CURRENT

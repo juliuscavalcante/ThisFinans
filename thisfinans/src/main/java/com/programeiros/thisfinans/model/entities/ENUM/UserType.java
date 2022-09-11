@@ -1,6 +1,6 @@
 package com.programeiros.thisfinans.model.entities.ENUM;
 
-public enum TypeUser {
+public enum UserType {
     DEFAULT,
     ADMIN
 }

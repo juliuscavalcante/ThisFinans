@@ -1,7 +1,7 @@
 package com.programeiros.thisfinans.model.entities;
 
 
-import com.programeiros.thisfinans.model.entities.ENUM.TypeUser;
+import com.programeiros.thisfinans.model.entities.ENUM.UserType;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
@@ -9,13 +9,13 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -50,20 +50,18 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String password;
 
-    @Email
     @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
-    @NotNull
-    private TypeUser type;
+    @Enumerated(EnumType.STRING)
+    private UserType type;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private Boolean status;
 
     @Column(name = "create_date", nullable = false)
     private Instant createDate;
-
 
     @Column(name = "update_date")
     private Instant updateDate;

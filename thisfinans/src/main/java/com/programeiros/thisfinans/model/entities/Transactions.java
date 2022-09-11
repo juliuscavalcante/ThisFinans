@@ -1,6 +1,6 @@
 package com.programeiros.thisfinans.model.entities;
 
-import com.programeiros.thisfinans.model.entities.ENUM.TypeTransactions;
+import com.programeiros.thisfinans.model.entities.ENUM.TransactionsType;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,12 +50,14 @@ public class Transactions implements Serializable {
     private String description;
 
     @Column(nullable = false)
-    private TypeTransactions type;
+    @Enumerated(EnumType.STRING)
+    private TransactionsType type;
 
     @Column(nullable = false)
+
     private BigDecimal amount;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private Boolean status;
 
     @Column(name = "transaction_date", nullable = false)
@@ -71,7 +75,7 @@ public class Transactions implements Serializable {
 
     @OneToMany(mappedBy = "transactions")
     @Setter(AccessLevel.NONE)
-    List<TransactionEntries> transactionEntries;
+    private List<TransactionEntries> transactionEntries;
 
     @Override
     public int hashCode() {
