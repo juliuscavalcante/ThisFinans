@@ -66,7 +66,7 @@ public class Account implements Serializable {
 
     @OneToMany(mappedBy = "accountTransactions")
     @Setter(AccessLevel.NONE)
-    private List<Transactions> Transactions;
+    private List<Transactions> transactions;
 
     @OneToMany(mappedBy = "accountEntries")
     @Setter(AccessLevel.NONE)
@@ -91,4 +91,3 @@ public class Account implements Serializable {
         return false;
     }
 }
-
