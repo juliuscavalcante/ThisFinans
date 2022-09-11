@@ -1,4 +1,4 @@
-package com.programeiros.thisfinans.model.entities.ENUM;
+package com.programeiros.thisfinans.model.enums;
 
 public enum AccountType {
     WALLET,

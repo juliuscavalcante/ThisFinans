@@ -1,7 +1,7 @@
 package com.programeiros.thisfinans.model.entities;
 
 
-import com.programeiros.thisfinans.model.entities.ENUM.UserType;
+import com.programeiros.thisfinans.model.enums.UserType;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
@@ -58,7 +58,7 @@ public class User implements Serializable {
     private UserType type;
 
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
-    private Boolean status;
+    private Boolean deleted;
 
     @Column(name = "create_date", nullable = false)
     private Instant createDate;
@@ -69,6 +69,10 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "user")
     @Setter(AccessLevel.NONE)
     private List<Account> accounts;
+
+    @OneToMany(mappedBy = "user")
+    @Setter(AccessLevel.NONE)
+    private List<UserConfig> userConfigs;
 
     @Override
     public int hashCode() {

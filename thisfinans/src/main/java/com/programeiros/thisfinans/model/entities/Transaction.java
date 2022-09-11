@@ -1,6 +1,7 @@
 package com.programeiros.thisfinans.model.entities;
 
-import com.programeiros.thisfinans.model.entities.ENUM.TransactionsType;
+import com.programeiros.thisfinans.model.enums.TransactionStatus;
+import com.programeiros.thisfinans.model.enums.TransactionType;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -32,7 +33,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
-public class Transactions implements Serializable {
+public class Transaction implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 534117576380387880L;
@@ -45,20 +46,22 @@ public class Transactions implements Serializable {
     @Column(name = "transaction_cod", nullable = false)
     private UUID cod;
 
-
     @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private TransactionsType type;
+    private TransactionType type;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
 
+    @Column(nullable = false)
     private BigDecimal amount;
 
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
-    private Boolean status;
+    private Boolean deleted;
 
     @Column(name = "transaction_date", nullable = false)
     private Instant transactionDate;
@@ -73,9 +76,9 @@ public class Transactions implements Serializable {
     @JoinColumn(name = "account_fk")
     private Account accountTransactions;
 
-    @OneToMany(mappedBy = "transactions")
+    @OneToMany(mappedBy = "transaction")
     @Setter(AccessLevel.NONE)
-    private List<TransactionEntries> transactionEntries;
+    private List<TransactionEntry> transactionEntries;
 
     @Override
     public int hashCode() {

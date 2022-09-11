@@ -28,7 +28,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
-public class TransactionEntries implements Serializable {
+public class TransactionEntry implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -5722327047262350956L;
@@ -46,7 +46,7 @@ public class TransactionEntries implements Serializable {
     private BigDecimal amount;
 
     @Column(name = "entry_date", nullable = false)
-    private Instant entriesDate;
+    private Instant entryDate;
 
     @Column(name = "create_date", nullable = false)
     private Instant createDate;
@@ -56,7 +56,7 @@ public class TransactionEntries implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "transaction_fk")
-    private Transactions transactions;
+    private Transaction transaction;
 
     @ManyToOne
     @JoinColumn(name = "account_fk")
