@@ -1,7 +1,6 @@
 package com.programeiros.thisfinans.model.entities;
 
-
-import com.programeiros.thisfinans.model.enums.UserType;
+import com.programeiros.thisfinans.model.enums.AccountType;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
@@ -14,6 +13,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -23,39 +24,32 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
-@Table(name = "users")
+@Table(name = "accounts")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Builder
-public class User implements Serializable {
+public class Account implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 2694266116540907321L;
+    private static final long serialVersionUID = -568700344491669241L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "account_id", nullable = false)
     private Long id;
 
-    @Column(name = "user_cod", nullable = false)
+    @Column(name = "account_cod", nullable = false)
     private UUID cod;
 
     @Column(nullable = false)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
-    private String email;
+    private String name;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserType type;
+    private AccountType type;
 
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private Boolean deleted;
@@ -66,13 +60,17 @@ public class User implements Serializable {
     @Column(name = "update_date")
     private Instant updateDate;
 
-    @OneToMany(mappedBy = "user")
-    @Setter(AccessLevel.NONE)
-    private List<Account> accounts;
+    @ManyToOne
+    @JoinColumn(name = "user_fk")
+    private User user;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "accountTransactions")
     @Setter(AccessLevel.NONE)
-    private List<UserConfig> userConfigs;
+    private List<Transaction> transactions;
+
+    @OneToMany(mappedBy = "accountEntries")
+    @Setter(AccessLevel.NONE)
+    private List<TransactionEntry> transactionEntries;
 
     @Override
     public int hashCode() {

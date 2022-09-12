@@ -1,9 +1,10 @@
 package com.programeiros.thisfinans.model.entities;
 
-
-import com.programeiros.thisfinans.model.enums.UserType;
+import com.programeiros.thisfinans.model.enums.TransactionStatus;
+import com.programeiros.thisfinans.model.enums.TransactionType;
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -14,6 +15,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -23,56 +26,59 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
-@Table(name = "users")
+@Table(name = "transactions")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
 @Builder
-public class User implements Serializable {
+public class Transaction implements Serializable {
 
     @Serial
-    private static final long serialVersionUID = 2694266116540907321L;
+    private static final long serialVersionUID = 534117576380387880L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "transaction_id", nullable = false)
     private Long id;
 
-    @Column(name = "user_cod", nullable = false)
+    @Column(name = "transaction_cod", nullable = false)
     private UUID cod;
 
     @Column(nullable = false)
-    private String username;
-
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
-    private String email;
+    private String description;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserType type;
+    private TransactionType type;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
+
+    @Column(nullable = false)
+    private BigDecimal amount;
 
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private Boolean deleted;
 
+    @Column(name = "transaction_date", nullable = false)
+    private Instant transactionDate;
+
     @Column(name = "create_date", nullable = false)
     private Instant createDate;
 
-    @Column(name = "update_date")
+    @Column(name = "update_date", nullable = false)
     private Instant updateDate;
 
-    @OneToMany(mappedBy = "user")
-    @Setter(AccessLevel.NONE)
-    private List<Account> accounts;
+    @ManyToOne
+    @JoinColumn(name = "account_fk")
+    private Account accountTransactions;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "transaction")
     @Setter(AccessLevel.NONE)
-    private List<UserConfig> userConfigs;
+    private List<TransactionEntry> transactionEntries;
 
     @Override
     public int hashCode() {
