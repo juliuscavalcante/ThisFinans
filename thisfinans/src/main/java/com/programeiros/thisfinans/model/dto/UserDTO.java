@@ -1,7 +1,7 @@
 package com.programeiros.thisfinans.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.programeiros.thisfinans.model.entities.User;
-import com.programeiros.thisfinans.model.entities.UserConfig;
 import com.programeiros.thisfinans.model.enums.UserType;
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.apache.catalina.startup.UserConfig;
 
 @Setter
 @Getter

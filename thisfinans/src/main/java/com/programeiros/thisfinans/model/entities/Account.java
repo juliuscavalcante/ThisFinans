@@ -1,5 +1,6 @@
 package com.programeiros.thisfinans.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.programeiros.thisfinans.model.enums.AccountType;
 import java.io.Serial;
 import java.io.Serializable;
@@ -63,6 +64,7 @@ public class Account implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "user_fk")
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "accountTransactions")
