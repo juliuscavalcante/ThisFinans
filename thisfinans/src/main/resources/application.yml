@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/thisfinansdb
     username: root
-    password: 1234567
+    password: P@ssw0rd
   jpa:
     open-in-view: false
     hibernate:

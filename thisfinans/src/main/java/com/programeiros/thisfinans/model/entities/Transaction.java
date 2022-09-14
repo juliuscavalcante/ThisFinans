@@ -76,9 +76,9 @@ public class Transaction implements Serializable {
     @JoinColumn(name = "account_fk")
     private Account accountTransactions;
 
-    @OneToMany(mappedBy = "transaction")
-    @Setter(AccessLevel.NONE)
-    private List<TransactionEntry> transactionEntries;
+//    @OneToMany(mappedBy = "transaction")
+//    @Setter(AccessLevel.NONE)
+//    private List<TransactionEntry> transactionEntries;
 
     @Override
     public int hashCode() {

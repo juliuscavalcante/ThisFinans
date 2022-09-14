@@ -51,7 +51,7 @@ public class TransactionDTO implements Serializable {
         this.createDate = entity.getCreateDate();
         this.updateDate = entity.getUpdateDate();
         this.accountTransactions = entity.getAccountTransactions();
-        this.transactionEntries = entity.getTransactionEntries().stream().map(TransactionEntryDTO::new).collect(Collectors.toList());
+        //this.transactionEntries = entity.getTransactionEntries().stream().map(TransactionEntryDTO::new).collect(Collectors.toList());
     }
 
     @Override
