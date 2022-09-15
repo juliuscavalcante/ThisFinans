@@ -45,7 +45,7 @@ public class TransactionService {
         }
     }
     
-    public void insert(Transaction transaction) {
-        repository.save(transaction);
+    public void insert(TransactionDTO transactionDTO) {
+        repository.save(new Transaction(transactionDTO.getId(),transactionDTO.getCod(), transactionDTO.getDescription(), transactionDTO.getType(),transactionDTO.getStatus(),transactionDTO.getAmount(),transactionDTO.getDeleted(),transactionDTO.getTransactionDate(),transactionDTO.getCreateDate(),transactionDTO.getUpdateDate(),transactionDTO.getAccountTransactions()));
     }
 }

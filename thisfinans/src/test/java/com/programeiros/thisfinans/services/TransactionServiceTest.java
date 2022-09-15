@@ -73,8 +73,9 @@ class TransactionServiceTest {
 
     @Test
     void itShouldInsert() {
+        TransactionDTO transactionDTO = new TransactionDTO(transaction);
         //when
-        underTest.insert(transaction);
+        underTest.insert(transactionDTO);
 
         //then
         ArgumentCaptor<Transaction> transactionArgumentCaptor = ArgumentCaptor.forClass(Transaction.class);
@@ -83,16 +84,16 @@ class TransactionServiceTest {
 
         TransactionDTO capturedTransaction = new TransactionDTO(transactionArgumentCaptor.getValue());
 
-        assertEquals(capturedTransaction.getId(), transaction.getId());
-        assertEquals(capturedTransaction.getCod(), transaction.getCod());
-        assertEquals(capturedTransaction.getDescription(), transaction.getDescription());
-        assertEquals(capturedTransaction.getType(), transaction.getType());
-        assertEquals(capturedTransaction.getAmount(), transaction.getAmount());
-        assertEquals(capturedTransaction.getDeleted(), transaction.getDeleted());
-        assertEquals(capturedTransaction.getTransactionDate(), transaction.getTransactionDate());
-        assertEquals(capturedTransaction.getCreateDate(), transaction.getCreateDate());
-        assertEquals(capturedTransaction.getUpdateDate(), transaction.getUpdateDate());
-        assertEquals(capturedTransaction.getAccountTransactions(), transaction.getAccountTransactions());
+        assertEquals(capturedTransaction.getId(), transactionDTO.getId());
+        assertEquals(capturedTransaction.getCod(), transactionDTO.getCod());
+        assertEquals(capturedTransaction.getDescription(), transactionDTO.getDescription());
+        assertEquals(capturedTransaction.getType(), transactionDTO.getType());
+        assertEquals(capturedTransaction.getAmount(), transactionDTO.getAmount());
+        assertEquals(capturedTransaction.getDeleted(), transactionDTO.getDeleted());
+        assertEquals(capturedTransaction.getTransactionDate(), transactionDTO.getTransactionDate());
+        assertEquals(capturedTransaction.getCreateDate(), transactionDTO.getCreateDate());
+        assertEquals(capturedTransaction.getUpdateDate(), transactionDTO.getUpdateDate());
+        assertEquals(capturedTransaction.getAccountTransactions(), transactionDTO.getAccountTransactions());
 
 
     }
