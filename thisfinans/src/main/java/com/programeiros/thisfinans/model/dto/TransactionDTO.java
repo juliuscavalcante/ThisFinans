@@ -38,7 +38,7 @@ public class TransactionDTO implements Serializable {
     private Instant updateDate;
     private Account accountTransactions;
 
-    private List<TransactionEntryDTO> transactionEntries;
+    //private List<TransactionEntryDTO> transactionEntries;
 
     public TransactionDTO(Transaction entity) {
         this.id = entity.getId();

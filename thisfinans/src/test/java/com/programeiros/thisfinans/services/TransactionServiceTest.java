@@ -7,10 +7,12 @@ import com.programeiros.thisfinans.model.enums.TransactionType;
 import com.programeiros.thisfinans.repositories.TransactionRepository;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.Answer;
 import org.mockito.stubbing.OngoingStubbing;
 
 import javax.swing.text.html.parser.Entity;
@@ -45,8 +47,7 @@ class TransactionServiceTest {
     @Test
     void itShouldFindById() {
 
-
-       when(transactionRepository.findById(1L)).thenReturn(Optional.of(transaction));
+       when(transactionRepository.findById(any())).thenReturn(Optional.of(transaction));
        TransactionDTO testTransaction = underTest.findById(1L);
 
        assertEquals(transaction.getId(), testTransaction.getId());
@@ -64,7 +65,7 @@ class TransactionServiceTest {
 
     @Test
     void itShouldDelete() {
-        when(transactionRepository.findById(1L)).thenReturn(Optional.of(transaction));
+        when(transactionRepository.findById(any())).thenReturn(Optional.of(transaction));
 
         underTest.delete(1L);
 
@@ -95,6 +96,64 @@ class TransactionServiceTest {
         assertEquals(capturedTransaction.getUpdateDate(), transactionDTO.getUpdateDate());
         assertEquals(capturedTransaction.getAccountTransactions(), transactionDTO.getAccountTransactions());
 
+    }
 
+    @Test
+    void itShouldUpdateTheTransaction() {
+
+        TransactionDTO changes = new TransactionDTO(14L,UUID.randomUUID(),"Hello, world!",TransactionType.REVENUE,TransactionStatus.OPEN,BigDecimal.valueOf(10),Boolean.TRUE,Instant.now(),Instant.now(),Instant.now(),null);
+
+        when(transactionRepository.findById(any())).thenReturn(Optional.of(transaction));
+
+        TransactionDTO changedTransaction = underTest.update(changes);
+
+        assertEquals(changedTransaction.getId(), changes.getId());
+        assertEquals(changedTransaction.getCod(), changes.getCod());
+        assertEquals(changedTransaction.getDescription(), changes.getDescription());
+        assertEquals(changedTransaction.getType(), changes.getType());
+        assertEquals(changedTransaction.getAmount(), changes.getAmount());
+        assertEquals(changedTransaction.getDeleted(), changes.getDeleted());
+        assertEquals(changedTransaction.getTransactionDate(), changes.getTransactionDate());
+        assertEquals(changedTransaction.getCreateDate(), changes.getCreateDate());
+        assertEquals(changedTransaction.getUpdateDate(), changes.getUpdateDate());
+        assertEquals(changedTransaction.getAccountTransactions(), changes.getAccountTransactions());
+    }
+
+    @Test
+    void willUpdateData() {
+        TransactionDTO changes = new TransactionDTO(14L,UUID.randomUUID(),"Hello, world!",TransactionType.REVENUE,TransactionStatus.OPEN,BigDecimal.valueOf(10),Boolean.TRUE,Instant.now(),Instant.now(),Instant.now(),null);
+
+
+        Transaction changedTransaction = underTest.updateData(transaction, changes);
+
+        assertEquals(changedTransaction.getId(), changes.getId());
+        assertEquals(changedTransaction.getCod(), changes.getCod());
+        assertEquals(changedTransaction.getDescription(), changes.getDescription());
+        assertEquals(changedTransaction.getType(), changes.getType());
+        assertEquals(changedTransaction.getAmount(), changes.getAmount());
+        assertEquals(changedTransaction.getDeleted(), changes.getDeleted());
+        assertEquals(changedTransaction.getTransactionDate(), changes.getTransactionDate());
+        assertEquals(changedTransaction.getCreateDate(), changes.getCreateDate());
+        assertEquals(changedTransaction.getUpdateDate(), changes.getUpdateDate());
+        assertEquals(changedTransaction.getAccountTransactions(), changes.getAccountTransactions());
+
+    }
+
+    @Test
+    void convertFromDTO() {
+        TransactionDTO test = new TransactionDTO(transaction);
+
+        Transaction changedTransaction = underTest.convertFromDTO(test);
+
+        assertEquals(changedTransaction.getId(), transaction.getId());
+        assertEquals(changedTransaction.getCod(), transaction.getCod());
+        assertEquals(changedTransaction.getDescription(), transaction.getDescription());
+        assertEquals(changedTransaction.getType(), transaction.getType());
+        assertEquals(changedTransaction.getAmount(), transaction.getAmount());
+        assertEquals(changedTransaction.getDeleted(), transaction.getDeleted());
+        assertEquals(changedTransaction.getTransactionDate(), transaction.getTransactionDate());
+        assertEquals(changedTransaction.getCreateDate(), transaction.getCreateDate());
+        assertEquals(changedTransaction.getUpdateDate(), transaction.getUpdateDate());
+        assertEquals(changedTransaction.getAccountTransactions(), transaction.getAccountTransactions());
     }
 }
