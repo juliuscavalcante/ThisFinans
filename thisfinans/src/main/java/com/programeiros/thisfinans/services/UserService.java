@@ -1,11 +1,14 @@
 package com.programeiros.thisfinans.services;
 
-import com.programeiros.thisfinans.DB.DBException;
+import com.programeiros.thisfinans.model.dto.UserConfigDTO;
 import com.programeiros.thisfinans.model.dto.UserDTO;
 import com.programeiros.thisfinans.model.entities.User;
+import com.programeiros.thisfinans.model.enums.UserType;
+import com.programeiros.thisfinans.model.mappers.UserMapper;
 import com.programeiros.thisfinans.repositories.UserRepository;
-import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.UUID;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,27 +16,44 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository repository;
+    private final UserMapper mapper;
+    private final UserConfigService userConfigService;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserRepository repository, UserMapper mapper, UserConfigService userConfigService) {
         this.repository = repository;
+        this.mapper = mapper;
+        this.userConfigService = userConfigService;
     }
 
     @Transactional(readOnly = true)
-    public Optional<User> findById(Long id) {
-        return repository.findById(id);
+    public UserDTO findById(Long id) throws NotFoundException {
+        User user = repository.findById(id).orElseThrow(NotFoundException::new);
+        return mapper.entityToDto(user);
     }
 
     @Transactional
-    public User save(User user) {
-        return repository.save(user);
+    public UserDTO save(UserDTO userDTO) throws Exception {
+
+        validateExistsUserByEmail(userDTO.getEmail());
+
+        userDTO.setCod(UUID.randomUUID());
+        userDTO.setDeleted(Boolean.FALSE);
+        userDTO.setType(UserType.DEFAULT);
+
+        User savedUser = repository.save(mapper.dtoToEntity(userDTO));
+
+        UserConfigDTO userConfigDTO = userConfigService.createAndSaveDefaultUserConfig(mapper.entityToDto(savedUser));
+
+        UserDTO savedUserDTO = mapper.entityToDto(savedUser);
+        savedUserDTO.setUserConfigs(List.of(userConfigDTO));
+
+        return savedUserDTO;
     }
 
     @Transactional
-    public boolean existsUserByEmail(String email) {
-        return repository.existsUserByEmail(email);
+    public void validateExistsUserByEmail(String email) throws Exception {
+        if(repository.existsUserByEmail(email)){
+            throw new Exception("");
+        }
     }
-
-
-
-
 }

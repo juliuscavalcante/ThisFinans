@@ -1,6 +1,5 @@
 package com.programeiros.thisfinans.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
@@ -12,8 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -47,8 +46,18 @@ public class UserConfig implements Serializable {
     @Column(name = "update_date")
     private Instant updateDate;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_fk")
     private User user;
 
+    @PrePersist
+    private void prePersist(){
+        createDate = Instant.now();
+        updateDate = Instant.now();
+    }
+
+    @PreUpdate
+    private void preUpdate(){
+        updateDate = Instant.now();
+    }
 }

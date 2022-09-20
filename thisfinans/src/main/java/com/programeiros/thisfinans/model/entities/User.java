@@ -6,7 +6,6 @@ import com.programeiros.thisfinans.model.enums.UserType;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -17,7 +16,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -74,8 +74,19 @@ public class User implements Serializable {
     @JsonIgnore
     private List<Account> accounts;
 
-    @OneToOne(mappedBy = "user")
-    private UserConfig userConfigs;
+    @OneToMany(mappedBy = "user")
+    private List<UserConfig> userConfigs;
+
+    @PrePersist
+    private void prePersist(){
+        createDate = Instant.now();
+        updateDate = Instant.now();
+    }
+
+    @PreUpdate
+    private void preUpdate(){
+        updateDate = Instant.now();
+    }
 
     @Override
     public int hashCode() {

@@ -1,16 +1,11 @@
 package com.programeiros.thisfinans.controllers;
 
 import com.programeiros.thisfinans.model.dto.UserDTO;
-import com.programeiros.thisfinans.model.entities.User;
-import com.programeiros.thisfinans.model.entities.UserConfig;
-import com.programeiros.thisfinans.model.enums.UserType;
-import com.programeiros.thisfinans.services.UserConfigService;
+import com.programeiros.thisfinans.model.mappers.UserMapper;
 import com.programeiros.thisfinans.services.UserService;
-import java.time.Instant;
-import java.util.Optional;
-import java.util.UUID;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,56 +15,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@AllArgsConstructor
 @RestController
 @RequestMapping(value = "/users")
 public class UserController {
 
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserConfigService userConfigService;
-
-
+    private final UserService userService;
+    private final UserMapper mapper;
 
     @PostMapping
-    public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDTO userDTO){
-        if(userService.existsUserByEmail(userDTO.getEmail())){
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Conflict: email is already in use!");
-        }
-
-        User user   = new User();
-
-        user.setCod(UUID.randomUUID());
-        user.setUsername(userDTO.getUsername());
-        user.setPassword(userDTO.getPassword());
-        user.setEmail(userDTO.getEmail());
-        user.setType(UserType.DEFAULT);
-        user.setDeleted(false);
-        user.setCreateDate(Instant.now());
-        user.setUpdateDate(Instant.now());
-        user.setUserConfigs(createdUserConfigDefault(user));
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.save(user));
+    public ResponseEntity<Object> saveUser(@RequestBody @Valid UserDTO userDTO) throws Exception {
+        UserDTO newUser = userService.save(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneUser(@PathVariable(value = "id") Long id){
-        Optional<User> userOptional = userService.findById(id);
-        return userOptional.<ResponseEntity<Object>>map(user -> ResponseEntity.status(HttpStatus.OK).body(user)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found"));
+    public ResponseEntity<UserDTO> getOneUser(@PathVariable(value = "id") Long id) throws NotFoundException {
+        UserDTO userDTO = userService.findById(id);
+        return ResponseEntity.accepted().body(userDTO);
     }
-
-
-    private UserConfig createdUserConfigDefault(User user){
-        UserConfig userConfig = new UserConfig();
-        userConfig.setBudgetClosingDay(5);
-        userConfig.setCreateDate(Instant.now());
-        userConfig.setUpdateDate(Instant.now());
-        userConfig.setUser(user);
-        return userConfigService.save(userConfig);
-    }
-
-
-
 }

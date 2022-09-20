@@ -40,20 +40,6 @@ public class TransactionDTO implements Serializable {
 
     private List<TransactionEntryDTO> transactionEntries;
 
-    public TransactionDTO(Transaction entity) {
-        this.id = entity.getId();
-        this.cod = entity.getCod();
-        this.description = entity.getDescription();
-        this.type = entity.getType();
-        this.amount = entity.getAmount();
-        this.deleted = entity.getDeleted();
-        this.transactionDate = entity.getTransactionDate();
-        this.createDate = entity.getCreateDate();
-        this.updateDate = entity.getUpdateDate();
-        this.accountTransactions = entity.getAccountTransactions();
-        this.transactionEntries = entity.getTransactionEntries().stream().map(TransactionEntryDTO::new).collect(Collectors.toList());
-    }
-
     @Override
     public int hashCode() {
         return java.util.Objects.hashCode(cod);
