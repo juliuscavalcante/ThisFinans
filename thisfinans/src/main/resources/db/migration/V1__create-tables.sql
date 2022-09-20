@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS users (
     user_id BIGINT AUTO_INCREMENT,
-    user_cod BINARY(16) NOT NULL,
+    user_cod BINARY(36) NOT NULL,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS user_configs (
 
 CREATE TABLE IF NOT EXISTS accounts (
     account_id BIGINT AUTO_INCREMENT,
-    account_cod BINARY(16) NOT NULL,
+    account_cod BINARY(36) NOT NULL,
     name VARCHAR(255) NOT NULL,
     type VARCHAR(50) NOT NULL,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 
 CREATE TABLE IF NOT EXISTS transactions (
     transaction_id BIGINT AUTO_INCREMENT,
-    transaction_cod BINARY(16) NOT NULL,
+    transaction_cod BINARY(36) NOT NULL,
     description VARCHAR(255) NOT NULL,
     type VARCHAR(50) NOT NULL,
     status VARCHAR(50) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS transaction_days (
 
 CREATE TABLE IF NOT EXISTS transaction_entries (
     transaction_entry_id BIGINT AUTO_INCREMENT,
-    transaction_entry_cod BINARY(16) NOT NULL,
+    transaction_entry_cod BINARY(36) NOT NULL,
     amount DECIMAL(10,4) NOT NULL,
     entry_date TIMESTAMP NOT NULL,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
