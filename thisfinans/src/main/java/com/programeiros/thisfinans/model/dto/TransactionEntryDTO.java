@@ -26,8 +26,7 @@ public class TransactionEntryDTO implements Serializable {
     private Instant entryDate;
     private Instant createDate;
     private Instant updateDate;
-    private TransactionDTO transaction;
-    private AccountDTO accountEntries;
+
 
     @Override
     public int hashCode() {

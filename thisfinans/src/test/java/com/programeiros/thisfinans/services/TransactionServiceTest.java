@@ -22,7 +22,7 @@ class TransactionServiceTest {
     @InjectMocks
     TransactionService underTest;
 
-    Transaction transaction = new Transaction(22L,UUID.randomUUID(),"Teste",TransactionType.EXPENSES,TransactionStatus.COMPLETE,BigDecimal.valueOf(20),Boolean.FALSE,Instant.now(),Instant.now(),Instant.now(),null);
+//    Transaction transaction = new Transaction(22L,UUID.randomUUID(),"Teste",TransactionType.EXPENSES,TransactionStatus.COMPLETE,BigDecimal.valueOf(20),Boolean.FALSE,Instant.now(),Instant.now(),Instant.now(),null);
 
 //    @Test
 //    void itShouldFindAll() {

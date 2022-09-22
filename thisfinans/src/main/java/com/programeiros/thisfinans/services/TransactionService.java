@@ -22,7 +22,7 @@ public class TransactionService {
     private final TransactionMapper mapper;
 
     public List<TransactionDTO> findAll() {
-        return repository.findAll().stream().map(mapper::toDto).toList();
+        return repository.findAll().stream().map(x -> TransactionMapper.TRANSACTION_MAPPER.toDto(x)).toList();
     }
 
     public TransactionDTO findById(Long id) {
@@ -44,11 +44,11 @@ public class TransactionService {
     }
     
     public Transaction insert(TransactionDTO transactionDTO) {
-        return repository.save(convertFromDTO(transactionDTO));
+        return repository.save(TransactionMapper.TRANSACTION_MAPPER.toEntity(transactionDTO));
     }
 
     public TransactionDTO update(TransactionDTO transactionDTO) {
-            Transaction transaction = convertFromDTO(transactionDTO);
+            Transaction transaction = TransactionMapper.TRANSACTION_MAPPER.toEntity(transactionDTO);
             updateData(repository.findById(transaction.getId()).orElseThrow(ResourceNotFoundExceptionWithoutArgument::new), transactionDTO);
 
             repository.save(transaction);
@@ -69,9 +69,5 @@ public class TransactionService {
 //        transaction.setAccountTransactions(transactionDTO.getAccountTransactions());
 
         return transaction;
-    }
-
-    public Transaction convertFromDTO(TransactionDTO transactionDTO)  {
-        return new Transaction(transactionDTO.getId(),transactionDTO.getCod(), transactionDTO.getDescription(), transactionDTO.getType(),transactionDTO.getStatus(),transactionDTO.getAmount(),transactionDTO.getDeleted(),transactionDTO.getTransactionDate(),transactionDTO.getCreateDate(),transactionDTO.getUpdateDate(), null);
     }
 }
