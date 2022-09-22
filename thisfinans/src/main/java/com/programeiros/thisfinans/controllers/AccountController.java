@@ -2,7 +2,7 @@ package com.programeiros.thisfinans.controllers;
 
 import com.programeiros.thisfinans.exceptions.business.AccountNameRuleException;
 import com.programeiros.thisfinans.exceptions.business.AccountNameRuleWithParamsException;
-import com.programeiros.thisfinans.exceptions.mappers.AccountMapper;
+import com.programeiros.thisfinans.model.mappers.AccountMapper;
 import com.programeiros.thisfinans.model.dto.AccountDTO;
 import com.programeiros.thisfinans.services.AccountService;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-
 import javax.validation.Valid;
 
 
