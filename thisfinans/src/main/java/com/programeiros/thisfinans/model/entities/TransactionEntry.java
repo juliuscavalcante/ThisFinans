@@ -60,7 +60,7 @@ public class TransactionEntry implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "account_fk")
-    private Account accountEntries;
+    private Account accountEntry;
 
     @Override
     public int hashCode() {

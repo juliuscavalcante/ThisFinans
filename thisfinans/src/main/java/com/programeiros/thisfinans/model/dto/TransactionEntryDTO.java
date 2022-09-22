@@ -27,7 +27,6 @@ public class TransactionEntryDTO implements Serializable {
     private Instant createDate;
     private Instant updateDate;
 
-
     @Override
     public int hashCode() {
         return java.util.Objects.hashCode(cod);
