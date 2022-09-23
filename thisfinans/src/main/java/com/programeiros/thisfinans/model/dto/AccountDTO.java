@@ -1,5 +1,8 @@
 package com.programeiros.thisfinans.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.programeiros.thisfinans.model.entities.User;
 import com.programeiros.thisfinans.model.enums.AccountType;
 import java.io.Serial;
@@ -16,6 +19,8 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityReference(alwaysAsId = true)
 public class AccountDTO implements Serializable {
 
     @Serial
@@ -29,8 +34,7 @@ public class AccountDTO implements Serializable {
     private User user;
     private Instant createDate;
     private Instant updateDate;
-    private List<TransactionDTO> transactions;
-    private List<TransactionEntryDTO> transactionEntries;
+
 
     @Override
     public int hashCode() {

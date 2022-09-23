@@ -1,5 +1,6 @@
 package com.programeiros.thisfinans.model.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.enums.TransactionType;
 import java.io.Serial;
@@ -65,11 +66,11 @@ public class Transaction implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "account_fk")
-    private Account accountTransactions;
+    private Account accountId;
 
     @OneToMany(mappedBy = "transaction", fetch = FetchType.EAGER)
     @Setter(AccessLevel.NONE)
-    private List<TransactionEntry> transactionEntries;
+    private List<TransactionEntry> transactionEntriesId;
 
     @Override
     public int hashCode() {

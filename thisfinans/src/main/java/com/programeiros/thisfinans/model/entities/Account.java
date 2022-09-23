@@ -1,6 +1,6 @@
 package com.programeiros.thisfinans.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import com.programeiros.thisfinans.model.enums.AccountType;
 import java.io.Serial;
 import java.io.Serializable;
@@ -67,13 +67,13 @@ public class Account implements Serializable {
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "accountTransactions")
+    @OneToMany(mappedBy = "accountId")
     @Setter(AccessLevel.NONE)
     private List<Transaction> transactions;
 
     @OneToMany(mappedBy = "accountEntry")
     @Setter(AccessLevel.NONE)
-    private List<TransactionEntry> transactionEntries;
+    private List<TransactionEntry> transactionEntriesId;
 
     @Override
     public int hashCode() {

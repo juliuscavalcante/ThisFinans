@@ -1,5 +1,6 @@
 package com.programeiros.thisfinans.model.dto;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.programeiros.thisfinans.model.entities.User;
 import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.enums.TransactionType;
@@ -33,8 +34,8 @@ public class TransactionDTO implements Serializable {
     private Instant transactionDate;
     private Instant createDate;
     private Instant updateDate;
-    private AccountDTO accountTransactions;
-    private List<TransactionEntryDTO> transactionEntries;
+    private AccountDTO accountId;
+    private List<TransactionEntryDTO> transactionEntriesId;
 
     @Override
     public int hashCode() {
