@@ -67,7 +67,7 @@ public class Account implements Serializable {
     @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "accountId")
+    @OneToMany(mappedBy = "account")
     @Setter(AccessLevel.NONE)
     private List<Transaction> transactions;
 

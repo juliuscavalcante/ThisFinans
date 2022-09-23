@@ -1,6 +1,5 @@
 package com.programeiros.thisfinans.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.enums.TransactionType;
 import java.io.Serial;
@@ -9,8 +8,20 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
-import javax.persistence.*;
-
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -66,11 +77,22 @@ public class Transaction implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "account_fk")
-    private Account accountId;
+    private Account account;
 
     @OneToMany(mappedBy = "transaction", fetch = FetchType.EAGER)
     @Setter(AccessLevel.NONE)
     private List<TransactionEntry> transactionEntriesId;
+
+    @PrePersist
+    private void prePersist(){
+        createDate = Instant.now();
+        updateDate = Instant.now();
+    }
+
+    @PreUpdate
+    private void preUpdate(){
+        updateDate = Instant.now();
+    }
 
     @Override
     public int hashCode() {

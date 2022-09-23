@@ -11,8 +11,10 @@ public interface TransactionMapper {
 
     TransactionMapper TRANSACTION_MAPPER = Mappers.getMapper(TransactionMapper.class);
 
+    @Mapping(target="account.id", source="accountId")
     Transaction toEntity(TransactionDTO transactionDTO);
 
+    @Mapping(target="accountId", source="account.id")
     TransactionDTO toDto(Transaction transaction);
 
 }

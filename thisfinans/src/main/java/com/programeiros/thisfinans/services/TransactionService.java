@@ -3,12 +3,14 @@ package com.programeiros.thisfinans.services;
 import com.programeiros.thisfinans.DB.DBException;
 import com.programeiros.thisfinans.model.dto.TransactionDTO;
 import com.programeiros.thisfinans.model.entities.Transaction;
+import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.mapper.TransactionMapper;
 import com.programeiros.thisfinans.repositories.TransactionRepository;
 import com.programeiros.thisfinans.services.exceptions.ResourceNotFoundException;
 import com.programeiros.thisfinans.services.exceptions.ResourceNotFoundExceptionWithoutArgument;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -43,8 +45,13 @@ public class TransactionService {
         }
     }
     
-    public Transaction insert(TransactionDTO transactionDTO) {
-        return repository.save(TransactionMapper.TRANSACTION_MAPPER.toEntity(transactionDTO));
+    public TransactionDTO insert(TransactionDTO transactionDTO) {
+        transactionDTO.setCod(UUID.randomUUID());
+        transactionDTO.setStatus(TransactionStatus.OPEN);
+        transactionDTO.setDeleted(Boolean.FALSE);
+        return TransactionMapper.TRANSACTION_MAPPER.toDto(
+                repository.save(TransactionMapper.TRANSACTION_MAPPER.toEntity(transactionDTO))
+        );
     }
 
     public TransactionDTO update(TransactionDTO transactionDTO) {

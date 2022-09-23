@@ -35,12 +35,12 @@ public class TransactionController {
 
     @PostMapping
     public ResponseEntity<TransactionDTO> insert(@RequestBody @Valid TransactionDTO transactionDTO) {
-        Transaction newTransaction = transactionService.insert(transactionDTO);
+        TransactionDTO newTransaction = transactionService.insert(transactionDTO);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(TransactionMapper.TRANSACTION_MAPPER.toDto(newTransaction));
+        return ResponseEntity.status(HttpStatus.CREATED).body(newTransaction);
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         transactionService.delete(id);
 
