@@ -1,21 +1,31 @@
 package com.programeiros.thisfinans.services;
 
+import com.programeiros.thisfinans.model.mappers.AccountMapper;
+import com.programeiros.thisfinans.model.dto.AccountDTO;
 import com.programeiros.thisfinans.model.entities.Account;
+import com.programeiros.thisfinans.repositories.AccountRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 @Service
-public interface AccountService {
+@AllArgsConstructor
+public class AccountService {
 
-    Account insert(Account account);
+    private final AccountRepository accountRepository;
+    private final AccountMapper mapper;
 
-    Account update(Account account);
+    @Transactional
+    public AccountDTO findById(Long id) throws ChangeSetPersister.NotFoundException {
+        Account account = accountRepository.findById(id).orElseThrow(NotFoundException::new);
+        return mapper.entityToDto(account);
+    }
 
-    Optional<Account> findById(Long id);
-
-    void delete(Long id);
-
-    List<Account> findAll();
+    @Transactional
+    public Account save(AccountDTO accountDTO) throws Exception {
+        Account account = new Account(accountDTO);
+        return accountRepository.save(account);
+    }
 }
