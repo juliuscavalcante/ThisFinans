@@ -14,6 +14,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -45,6 +48,17 @@ public class AccountDTO implements Serializable {
         this.updateDate = entity.getUpdateDate();
         this.transactions = entity.getTransactions().stream().map(TransactionDTO::new).collect(Collectors.toList());
         this.transactionEntries = entity.getTransactionEntries().stream().map(TransactionEntryDTO::new).collect(Collectors.toList());
+    }
+
+    @PrePersist
+    private void prePersist(){
+        createDate = Instant.now();
+        updateDate = Instant.now();
+    }
+
+    @PreUpdate
+    private void preUpdate(){
+        updateDate = Instant.now();
     }
 
     @Override

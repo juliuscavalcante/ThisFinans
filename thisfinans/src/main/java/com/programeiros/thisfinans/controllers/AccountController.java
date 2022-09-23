@@ -2,16 +2,19 @@ package com.programeiros.thisfinans.controllers;
 
 import com.programeiros.thisfinans.exceptions.business.AccountNameRuleException;
 import com.programeiros.thisfinans.exceptions.business.AccountNameRuleWithParamsException;
+import com.programeiros.thisfinans.model.entities.Account;
 import com.programeiros.thisfinans.model.mappers.AccountMapper;
 import com.programeiros.thisfinans.model.dto.AccountDTO;
 import com.programeiros.thisfinans.services.AccountService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import javax.validation.Valid;
+import java.net.URI;
 
 
 @AllArgsConstructor
@@ -39,9 +42,11 @@ public class AccountController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> saveAccount(@RequestBody @Valid AccountDTO accountDTO) throws Exception {
-        AccountDTO newAccount = accountService.save(accountDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(newAccount);
+    public ResponseEntity<AccountDTO> saveAccount(@RequestBody @Valid AccountDTO accountDTO) throws Exception {
+        Account newAccount = accountService.save(accountDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newAccount.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/{id}")
