@@ -85,6 +85,7 @@ public class Transaction implements Serializable {
 
     @PrePersist
     private void prePersist(){
+        deleted = Boolean.FALSE;
         createDate = Instant.now();
         updateDate = Instant.now();
     }

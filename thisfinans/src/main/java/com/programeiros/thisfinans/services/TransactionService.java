@@ -48,7 +48,6 @@ public class TransactionService {
     public TransactionDTO insert(TransactionDTO transactionDTO) {
         transactionDTO.setCod(UUID.randomUUID());
         transactionDTO.setStatus(TransactionStatus.OPEN);
-        transactionDTO.setDeleted(Boolean.FALSE);
         return TransactionMapper.TRANSACTION_MAPPER.toDto(
                 repository.save(TransactionMapper.TRANSACTION_MAPPER.toEntity(transactionDTO))
         );
@@ -69,11 +68,7 @@ public class TransactionService {
         transaction.setDescription(transactionDTO.getDescription());
         transaction.setType(transactionDTO.getType());
         transaction.setAmount(transactionDTO.getAmount());
-        transaction.setDeleted(transactionDTO.getDeleted());
         transaction.setTransactionDate(transactionDTO.getTransactionDate());
-        transaction.setCreateDate(transactionDTO.getCreateDate());
-        transaction.setUpdateDate(transactionDTO.getUpdateDate());
-//        transaction.setAccountTransactions(transactionDTO.getAccountTransactions());
 
         return transaction;
     }

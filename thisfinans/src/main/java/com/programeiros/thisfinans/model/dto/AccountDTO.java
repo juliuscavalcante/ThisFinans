@@ -5,6 +5,7 @@ import com.programeiros.thisfinans.model.enums.AccountType;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,6 +31,8 @@ public class AccountDTO implements Serializable {
     private User user;
     private Instant createDate;
     private Instant updateDate;
+    private List<TransactionDTO> transactions;
+    private List<TransactionEntryDTO> transactionEntries;
 
 
     @Override
