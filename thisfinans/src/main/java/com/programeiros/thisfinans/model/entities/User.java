@@ -26,7 +26,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Table(name = "users")
 @AllArgsConstructor
@@ -79,8 +78,14 @@ public class User implements Serializable {
 
     @PrePersist
     private void prePersist(){
-        createDate = Instant.now();
-        updateDate = Instant.now();
+        final Instant createDate = Instant.now();
+        cod = UUID.randomUUID();
+        if(type == null){
+            type = UserType.DEFAULT;
+        }
+        deleted = Boolean.FALSE;
+        this.createDate = createDate;
+        updateDate = createDate;
     }
 
     @PreUpdate

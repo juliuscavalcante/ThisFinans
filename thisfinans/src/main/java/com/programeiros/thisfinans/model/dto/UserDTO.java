@@ -4,11 +4,8 @@ import com.programeiros.thisfinans.model.entities.User;
 import com.programeiros.thisfinans.model.enums.UserType;
 import java.io.Serial;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,23 +26,9 @@ public class UserDTO implements Serializable {
     private String password;
     private String email;
     private UserType type;
-    private Boolean deleted;
-    private Instant createDate;
-    private Instant updateDate;
 
     private List<AccountDTO> accounts;
     private List<UserConfigDTO> userConfigs;
-
-    @PrePersist
-    private void prePersist(){
-        createDate = Instant.now();
-        updateDate = Instant.now();
-    }
-
-    @PreUpdate
-    private void preUpdate(){
-        updateDate = Instant.now();
-    }
 
     @Override
     public int hashCode() {

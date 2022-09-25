@@ -6,6 +6,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,7 +37,6 @@ public class Account implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -568700344491669241L;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,7 +77,7 @@ public class Account implements Serializable {
 
     @Override
     public int hashCode() {
-        return java.util.Objects.hashCode(cod);
+        return Objects.hashCode(cod);
     }
 
     @Override
