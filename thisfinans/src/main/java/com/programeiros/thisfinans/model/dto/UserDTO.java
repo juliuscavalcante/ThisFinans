@@ -1,18 +1,19 @@
 package com.programeiros.thisfinans.model.dto;
 
-import com.programeiros.thisfinans.model.entities.User;
 import com.programeiros.thisfinans.model.enums.UserType;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
 @Getter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO implements Serializable {
@@ -43,8 +44,8 @@ public class UserDTO implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (obj instanceof User) {
-            return ((User) obj).getCod().equals(getCod());
+        if (obj instanceof UserDTO) {
+            return ((UserDTO) obj).getCod().equals(getCod());
         }
         return false;
     }
