@@ -71,9 +71,9 @@ public class Account implements Serializable {
     @Setter(AccessLevel.NONE)
     private List<Transaction> transactions;
 
-    @OneToMany(mappedBy = "accountEntry")
+    @OneToMany(mappedBy = "account")
     @Setter(AccessLevel.NONE)
-    private List<TransactionEntry> transactionEntriesId;
+    private List<TransactionEntry> transactionEntries;
 
     @Override
     public int hashCode() {

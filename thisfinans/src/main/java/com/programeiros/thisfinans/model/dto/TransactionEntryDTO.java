@@ -28,8 +28,8 @@ public class TransactionEntryDTO implements Serializable {
     private Instant entryDate;
     private Instant createDate;
     private Instant updateDate;
-    private TransactionDTO transactionId;
-    private AccountDTO accountId;
+    private Long transactionId;
+    private Long accountId;
 
     @Override
     public int hashCode() {
