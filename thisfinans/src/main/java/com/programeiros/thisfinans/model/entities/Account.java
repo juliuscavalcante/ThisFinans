@@ -2,6 +2,7 @@ package com.programeiros.thisfinans.model.entities;
 
 import com.fasterxml.jackson.annotation.*;
 import com.programeiros.thisfinans.model.enums.AccountType;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
@@ -18,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

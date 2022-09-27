@@ -2,6 +2,7 @@ package com.programeiros.thisfinans.model.entities;
 
 import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.enums.TransactionType;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -22,6 +23,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -88,14 +90,14 @@ public class Transaction implements Serializable {
     private List<TransactionDays> transactionDays;
 
     @PrePersist
-    private void prePersist(){
+    private void prePersist() {
         deleted = Boolean.FALSE;
         createDate = Instant.now();
         updateDate = Instant.now();
     }
 
     @PreUpdate
-    private void preUpdate(){
+    private void preUpdate() {
         updateDate = Instant.now();
     }
 

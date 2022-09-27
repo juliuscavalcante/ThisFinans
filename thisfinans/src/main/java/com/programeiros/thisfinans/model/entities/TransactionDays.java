@@ -1,10 +1,21 @@
 package com.programeiros.thisfinans.model.entities;
 
+import lombok.*;
+import org.hibernate.Hibernate;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Objects;
+
 @Entity
 @Table(name = "transaction_days")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+@Builder
 public class TransactionDays implements Serializable {
     @Serial
     private static final long serialVersionUID = -7036969324835011428L;
@@ -18,4 +29,18 @@ public class TransactionDays implements Serializable {
     @ManyToOne
     @JoinColumn(name = "transaction_fk")
     private Transaction transaction;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        TransactionDays that = (TransactionDays) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
+
 }

@@ -3,6 +3,7 @@ package com.programeiros.thisfinans.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.programeiros.thisfinans.model.enums.UserType;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
@@ -19,6 +20,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
