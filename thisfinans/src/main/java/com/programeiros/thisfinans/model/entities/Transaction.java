@@ -83,6 +83,10 @@ public class Transaction implements Serializable {
     @Setter(AccessLevel.NONE)
     private List<TransactionEntry> transactionEntriesId;
 
+    @OneToMany(mappedBy = "transaction")
+    @Setter(AccessLevel.NONE)
+    private List<TransactionDays> transactionDays;
+
     @PrePersist
     private void prePersist(){
         deleted = Boolean.FALSE;
