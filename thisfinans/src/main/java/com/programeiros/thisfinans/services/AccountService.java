@@ -10,12 +10,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class AccountService {
 
     private final AccountRepository accountRepository;
     private final AccountMapper mapper;
+
+    @Transactional
+    public List<Account> findAll() {
+        return accountRepository.findAll();
+    }
 
     @Transactional
     public AccountDTO findById(Long id) throws ChangeSetPersister.NotFoundException {

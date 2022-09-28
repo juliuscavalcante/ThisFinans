@@ -15,6 +15,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 @AllArgsConstructor
@@ -41,17 +43,25 @@ public class AccountController {
         return ResponseEntity.ok("Success!");
     }
 
-    @PostMapping
-    public ResponseEntity<AccountDTO> saveAccount(@RequestBody @Valid AccountDTO accountDTO) throws Exception {
-        Account newAccount = accountService.save(accountDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newAccount.getId()).toUri();
-        return ResponseEntity.created(uri).build();
+    @GetMapping
+    public ResponseEntity<List<AccountDTO>> findAll() {
+        List<Account> accountList = accountService.findAll();
+        List<AccountDTO> accountDTOList = accountList.stream().
+                map(AccountDTO::new).collect(Collectors.toList());
+        return ResponseEntity.ok().body(accountDTOList);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<AccountDTO> getOneAccount(@PathVariable(value = "id") Long id) throws NotFoundException {
         AccountDTO accountDTO = accountService.findById(id);
         return ResponseEntity.accepted().body(accountDTO);
+    }
+
+    @PostMapping
+    public ResponseEntity<AccountDTO> saveAccount(@RequestBody @Valid AccountDTO accountDTO) throws Exception {
+        Account newAccount = accountService.save(accountDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newAccount.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
