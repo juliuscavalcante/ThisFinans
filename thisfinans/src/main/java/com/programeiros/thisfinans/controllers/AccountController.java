@@ -44,14 +44,14 @@ public class AccountController {
     }
 
     @GetMapping
-    public ResponseEntity<List<AccountDTO>> findAll() {
+    public ResponseEntity<List<AccountDTO>> findAll() throws Exception {
         List<Account> accountList = accountService.findAll();
         List<AccountDTO> accountDTOList = accountList.stream().
                 map(AccountDTO::new).collect(Collectors.toList());
         return ResponseEntity.ok().body(accountDTOList);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value ="/{id}")
     public ResponseEntity<AccountDTO> getOneAccount(@PathVariable(value = "id") Long id) throws NotFoundException {
         AccountDTO accountDTO = accountService.findById(id);
         return ResponseEntity.accepted().body(accountDTO);
@@ -63,5 +63,11 @@ public class AccountController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(newAccount.getId()).toUri();
         return ResponseEntity.created(uri).build();
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<AccountDTO> update(@Valid @PathVariable Long id, @RequestBody AccountDTO accountDTO) throws Exception {
+        Account account = accountService.update(id, accountDTO);
+        return ResponseEntity.ok().body(new AccountDTO(account));
     }
 }

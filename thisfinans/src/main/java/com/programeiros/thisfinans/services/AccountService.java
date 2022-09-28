@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Service
@@ -33,6 +34,14 @@ public class AccountService {
     @Transactional
     public Account save(AccountDTO accountDTO) throws Exception {
         Account account = new Account(accountDTO);
+        return accountRepository.save(account);
+    }
+
+    @Transactional
+    public Account update(Long id, @Valid AccountDTO accountDTO) {
+        accountDTO.setId(id);
+        Account account;
+        account = new Account(accountDTO);
         return accountRepository.save(account);
     }
 }
