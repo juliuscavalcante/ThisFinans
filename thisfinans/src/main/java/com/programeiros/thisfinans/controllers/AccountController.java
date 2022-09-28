@@ -52,9 +52,9 @@ public class AccountController {
     }
 
     @GetMapping(value ="/{id}")
-    public ResponseEntity<AccountDTO> getOneAccount(@PathVariable(value = "id") Long id) throws NotFoundException {
-        AccountDTO accountDTO = accountService.findById(id);
-        return ResponseEntity.accepted().body(accountDTO);
+    public ResponseEntity<AccountDTO> findById(@PathVariable Long id) throws NotFoundException {
+        Account account = this.accountService.findById(id);
+        return ResponseEntity.ok().body(new AccountDTO(account));
     }
 
     @PostMapping
@@ -69,5 +69,11 @@ public class AccountController {
     public ResponseEntity<AccountDTO> update(@Valid @PathVariable Long id, @RequestBody AccountDTO accountDTO) throws Exception {
         Account account = accountService.update(id, accountDTO);
         return ResponseEntity.ok().body(new AccountDTO(account));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<AccountDTO> delete(@PathVariable Long id) throws NotFoundException {
+        accountService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

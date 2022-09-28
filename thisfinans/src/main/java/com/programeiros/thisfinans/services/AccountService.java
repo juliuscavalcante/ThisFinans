@@ -4,6 +4,7 @@ import com.programeiros.thisfinans.model.mappers.AccountMapper;
 import com.programeiros.thisfinans.model.dto.AccountDTO;
 import com.programeiros.thisfinans.model.entities.Account;
 import com.programeiros.thisfinans.repositories.AccountRepository;
+import com.programeiros.thisfinans.services.exception.ObjectNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -26,9 +28,9 @@ public class AccountService {
     }
 
     @Transactional
-    public AccountDTO findById(Long id) throws ChangeSetPersister.NotFoundException {
-        Account account = accountRepository.findById(id).orElseThrow(NotFoundException::new);
-        return mapper.entityToDto(account);
+    public Account findById(Long id) {
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        return accountOptional.orElseThrow(() -> new ObjectNotFoundException("technician id " + id + " not found"));
     }
 
     @Transactional
@@ -43,5 +45,11 @@ public class AccountService {
         Account account;
         account = new Account(accountDTO);
         return accountRepository.save(account);
+    }
+
+    @Transactional
+    public void delete(Long id) throws NotFoundException {
+        Account account = findById(id);
+        accountRepository.deleteById(id);
     }
 }
