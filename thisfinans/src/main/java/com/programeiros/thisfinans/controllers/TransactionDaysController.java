@@ -20,14 +20,21 @@ public class TransactionDaysController {
     private final TransactionDaysService service;
 
     @GetMapping
-    public ResponseEntity<List<TransactionDaysDTO>> findAll() {
-        return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<TransactionDaysDTO>> listAll() {
+        return new ResponseEntity<>(service.listAllDays(), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<TransactionDaysDTO> addANewDay(@RequestBody @Valid TransactionDaysDTO transactionDaysDTO) {
-        TransactionDays savedTransactionDays = service.insert(transactionDaysDTO);
+        TransactionDays savedTransactionDays = service.addingNewDay(transactionDaysDTO);
 
         return new  ResponseEntity<>(TransactionDaysMapper.INSTANCE.toDTO(savedTransactionDays), HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> replace(@RequestBody @Valid TransactionDaysDTO transactionDaysDTO) {
+        service.replaceTheDay(transactionDaysDTO);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
