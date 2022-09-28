@@ -37,4 +37,11 @@ public class TransactionDaysController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteDay(@PathVariable Long id) {
+        service.deleteDay(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
