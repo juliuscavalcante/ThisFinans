@@ -6,16 +6,17 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface TransactionDaysMapper {
 
     TransactionDaysMapper INSTANCE = Mappers.getMapper(TransactionDaysMapper.class);
-
+    @Transactional
     @Mapping(target = "transaction.id", source = "transactionId")
     TransactionDays toEntity(TransactionDaysDTO transactionDaysDTO);
-
+    @Transactional
     @Mapping(target = "transactionId", source = "transaction.id")
     TransactionDaysDTO toDTO(TransactionDays transactionDays);
 

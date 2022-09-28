@@ -58,8 +58,8 @@ public class Account implements Serializable {
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private Boolean deleted;
 
-    @Column(name = "create_date", nullable = false)
-    private Instant createDate;
+    @Column(name = "creation_date", nullable = false)
+    private Instant creationDate;
 
     @Column(name = "update_date")
     private Instant updateDate;

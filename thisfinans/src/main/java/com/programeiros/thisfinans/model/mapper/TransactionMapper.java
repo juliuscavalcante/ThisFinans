@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
 @Mapper
 public interface TransactionMapper {
 
-    TransactionMapper TRANSACTION_MAPPER = Mappers.getMapper(TransactionMapper.class);
+    TransactionMapper INSTANCE = Mappers.getMapper(TransactionMapper.class);
 
     @Mapping(target="account.id", source="accountId")
     Transaction toEntity(TransactionDTO transactionDTO);

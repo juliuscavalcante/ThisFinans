@@ -29,7 +29,7 @@ public class UserDTO implements Serializable {
     private String email;
     private UserType type;
     private Boolean deleted;
-    private Instant createdDate;
+    private Instant creationDate;
     private Instant updateDate;
 
     private List<AccountDTO> accounts;

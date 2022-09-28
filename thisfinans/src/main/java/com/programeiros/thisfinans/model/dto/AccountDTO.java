@@ -29,7 +29,7 @@ public class AccountDTO implements Serializable {
     private AccountType type;
     private Boolean deleted;
     private User user;
-    private Instant createDate;
+    private Instant creationDate;
     private Instant updateDate;
     private List<TransactionDTO> transactions;
     private List<TransactionEntryDTO> transactionEntries;

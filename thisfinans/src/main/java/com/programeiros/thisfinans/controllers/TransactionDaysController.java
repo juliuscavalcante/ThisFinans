@@ -5,7 +5,6 @@ import com.programeiros.thisfinans.model.entities.TransactionDays;
 import com.programeiros.thisfinans.model.mapper.TransactionDaysMapper;
 import com.programeiros.thisfinans.services.TransactionDaysService;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +25,7 @@ public class TransactionDaysController {
     }
 
     @PostMapping
-    public ResponseEntity<TransactionDaysDTO> save(@RequestBody @Valid TransactionDaysDTO transactionDaysDTO) {
+    public ResponseEntity<TransactionDaysDTO> addANewDay(@RequestBody @Valid TransactionDaysDTO transactionDaysDTO) {
         TransactionDays savedTransactionDays = service.insert(transactionDaysDTO);
 
         return new  ResponseEntity<>(TransactionDaysMapper.INSTANCE.toDTO(savedTransactionDays), HttpStatus.CREATED);

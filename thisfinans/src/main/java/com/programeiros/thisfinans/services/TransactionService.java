@@ -7,11 +7,12 @@ import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.mapper.TransactionMapper;
 import com.programeiros.thisfinans.repositories.TransactionRepository;
 import com.programeiros.thisfinans.services.exceptions.ResourceNotFoundException;
-import com.programeiros.thisfinans.services.exceptions.ResourceNotFoundExceptionWithoutArgument;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,55 +23,44 @@ import java.util.UUID;
 public class TransactionService {
 
     private final TransactionRepository repository;
-    private final TransactionMapper mapper;
 
     public List<TransactionDTO> findAll() {
-        return repository.findAll().stream().map(x -> TransactionMapper.TRANSACTION_MAPPER.toDto(x)).toList();
+        return repository.findAll()
+                .stream()
+                .map(TransactionMapper.INSTANCE::toDto)
+                .toList();
     }
 
-    public TransactionDTO findById(Long id) {
+    public TransactionDTO findByIdOrThrowBadRequestException(Long id) {
         Optional<Transaction> transaction = repository.findById(id);
 
-        return mapper.toDto(transaction.orElseThrow(() -> new ResourceNotFoundException(id)));
+        return TransactionMapper.INSTANCE.toDto(transaction.orElseThrow(
+                () -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Transaction not found, Id: " + id)));
     }
 
     public void delete(Long id) {
         try {
-            if(repository.findById(id).isPresent()) {
-                repository.delete(repository.findById(id).get());
-            }
+            repository.findById(id).ifPresent(repository::delete);
         } catch (EmptyResultDataAccessException ex) {
             throw new ResourceNotFoundException(id);
         } catch (DataIntegrityViolationException ex) {
             throw new DBException(ex.getMessage());
         }
     }
-    
+
     public TransactionDTO insert(TransactionDTO transactionDTO) {
         transactionDTO.setCod(UUID.randomUUID());
         transactionDTO.setStatus(TransactionStatus.OPEN);
-        return TransactionMapper.TRANSACTION_MAPPER.toDto(
-                repository.save(TransactionMapper.TRANSACTION_MAPPER.toEntity(transactionDTO))
+        return TransactionMapper.INSTANCE.toDto(
+                repository.save(TransactionMapper.INSTANCE.toEntity(transactionDTO))
         );
     }
 
     public TransactionDTO update(TransactionDTO transactionDTO) {
-            Transaction transaction = TransactionMapper.TRANSACTION_MAPPER.toEntity(transactionDTO);
-            updateData(repository.findById(transaction.getId()).orElseThrow(ResourceNotFoundExceptionWithoutArgument::new), transactionDTO);
+        Transaction transaction = TransactionMapper.INSTANCE.toEntity(transactionDTO);
 
-            repository.save(transaction);
+        repository.save(transaction);
 
-            return mapper.toDto(transaction);
-    }
-
-    public Transaction updateData(Transaction transaction, TransactionDTO transactionDTO) {
-        transaction.setId(transactionDTO.getId());
-        transaction.setCod(transactionDTO.getCod());
-        transaction.setDescription(transactionDTO.getDescription());
-        transaction.setType(transactionDTO.getType());
-        transaction.setAmount(transactionDTO.getAmount());
-        transaction.setTransactionDate(transactionDTO.getTransactionDate());
-
-        return transaction;
+        return TransactionMapper.INSTANCE.toDto(transaction);
     }
 }

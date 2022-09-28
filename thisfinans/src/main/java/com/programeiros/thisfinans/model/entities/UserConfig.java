@@ -43,8 +43,8 @@ public class UserConfig implements Serializable {
     @Column(name = "budget_closing_day", nullable = false, columnDefinition = "TINYINT", length = 1)
     private Integer budgetClosingDay;
 
-    @Column(name = "create_date", nullable = false)
-    private Instant createDate;
+    @Column(name = "creation_date", nullable = false)
+    private Instant creationDate;
 
     @Column(name = "update_date")
     private Instant updateDate;

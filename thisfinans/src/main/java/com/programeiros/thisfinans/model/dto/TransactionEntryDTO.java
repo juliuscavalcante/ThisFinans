@@ -24,7 +24,7 @@ public class TransactionEntryDTO implements Serializable {
     private UUID cod;
     private BigDecimal amount;
     private Instant entryDate;
-    private Instant createDate;
+    private Instant creationDate;
     private Instant updateDate;
     private Long transactionId;
     private Long accountId;

@@ -28,7 +28,7 @@ public class TransactionController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<TransactionDTO> findById(@PathVariable Long id) {
-        TransactionDTO transactionDTO = transactionService.findById(id);
+        TransactionDTO transactionDTO = transactionService.findByIdOrThrowBadRequestException(id);
 
         return ResponseEntity.ok().body(transactionDTO);
     }
@@ -49,7 +49,7 @@ public class TransactionController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<TransactionDTO> update(@PathVariable Long id, @RequestBody Transaction transaction) {
-        TransactionDTO transactionDTO = transactionService.update(TransactionMapper.TRANSACTION_MAPPER.toDto(transaction));
+        TransactionDTO transactionDTO = transactionService.update(TransactionMapper.INSTANCE.toDto(transaction));
 
         return ResponseEntity.ok().body(transactionDTO);
     }

@@ -49,8 +49,8 @@ public class TransactionEntry implements Serializable {
     @Column(name = "entry_date", nullable = false)
     private Instant entryDate;
 
-    @Column(name = "create_date", nullable = false)
-    private Instant createDate;
+    @Column(name = "creation_date")
+    private Instant creationDate;
 
     @Column(name = "update_date", nullable = false)
     private Instant updateDate;

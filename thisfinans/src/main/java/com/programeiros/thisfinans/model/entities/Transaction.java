@@ -71,8 +71,8 @@ public class Transaction implements Serializable {
     @Column(name = "transaction_date", nullable = false)
     private Instant transactionDate;
 
-    @Column(name = "create_date", nullable = false)
-    private Instant createDate;
+    @Column(name = "creation_date")
+    private Instant creationDate;
 
     @Column(name = "update_date", nullable = false)
     private Instant updateDate;
@@ -92,7 +92,7 @@ public class Transaction implements Serializable {
     @PrePersist
     private void prePersist() {
         deleted = Boolean.FALSE;
-        createDate = Instant.now();
+        creationDate = Instant.now();
         updateDate = Instant.now();
     }
 
