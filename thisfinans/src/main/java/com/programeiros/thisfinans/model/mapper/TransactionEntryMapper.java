@@ -7,6 +7,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface TransactionEntryMapper {
 
@@ -19,4 +21,7 @@ public interface TransactionEntryMapper {
     @Mapping(target = "accountId", source = "account.id")
     @Mapping(target = "transactionId", source = "transaction.id")
     TransactionEntryDTO toDTO(TransactionEntry transactionEntry);
+
+    List<TransactionEntry> toEntityList(List<TransactionEntryDTO> transactionEntryDTO);
+    List<TransactionEntryDTO> toDTOList(List<TransactionEntry> transactionEntry);
 }

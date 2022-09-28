@@ -81,9 +81,9 @@ public class Transaction implements Serializable {
     @JoinColumn(name = "account_fk")
     private Account account;
 
-    @OneToMany(mappedBy = "transaction", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "transaction")
     @Setter(AccessLevel.NONE)
-    private List<TransactionEntry> transactionEntriesId;
+    private List<TransactionEntry> transactionEntries;
 
     @OneToMany(mappedBy = "transaction")
     @Setter(AccessLevel.NONE)

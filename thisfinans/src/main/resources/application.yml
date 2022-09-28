@@ -4,6 +4,9 @@ spring:
     username: root
     password: root
   jpa:
-    open-in-view: false
-    hibernate:
-      ddl-auto: validate
+    hibernate.ddl-auto: validate
+    generate-ddl: false
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect

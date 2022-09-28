@@ -31,7 +31,8 @@ public class TransactionDTO implements Serializable {
     private BigDecimal amount;
     private Instant transactionDate;
     private Long accountId;
-    private List<TransactionEntryDTO> transactionEntriesId;
+    private List<TransactionEntryDTO> transactionEntries;
+    private List<TransactionDaysDTO> transactionDays;
 
     @Override
     public int hashCode() {
