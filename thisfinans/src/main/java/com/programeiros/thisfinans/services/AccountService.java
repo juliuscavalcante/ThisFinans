@@ -48,7 +48,7 @@ public class AccountService {
     }
 
     @Transactional
-    public void delete(Long id) throws NotFoundException {
+    public void delete(Long id) throws ObjectNotFoundException {
         Account account = findById(id);
         accountRepository.deleteById(id);
     }

@@ -9,10 +9,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
@@ -21,6 +19,7 @@ import javax.persistence.PreUpdate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AccountDTO implements Serializable {
 
     @Serial
