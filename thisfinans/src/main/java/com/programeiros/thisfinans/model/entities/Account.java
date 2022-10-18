@@ -1,6 +1,5 @@
 package com.programeiros.thisfinans.model.entities;
 
-import com.programeiros.thisfinans.model.dto.AccountDTO;
 import com.programeiros.thisfinans.model.enums.AccountType;
 import java.io.Serial;
 import java.io.Serializable;
@@ -27,6 +26,8 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "accounts")
+@AllArgsConstructor
+@NoArgsConstructor
 @Setter
 @Getter
 @Builder
@@ -71,27 +72,6 @@ public class Account implements Serializable {
     @OneToMany(mappedBy = "accountEntries")
     @Setter(AccessLevel.NONE)
     private List<TransactionEntry> transactionEntries;
-
-    public Account(Long id, UUID cod, String name, AccountType type, Boolean deleted, Instant createDate, Instant updateDate, User user, List<Transaction> transactions, List<TransactionEntry> transactionEntries) {
-        this.id = id;
-        this.cod = cod;
-        this.name = name;
-        this.type = type;
-        this.deleted = deleted;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.user = user;
-        this.transactions = transactions;
-        this.transactionEntries = transactionEntries;
-    }
-
-    public Account(AccountDTO accountDTO) {
-
-    }
-
-    public Account() {
-
-    }
 
     @Override
     public int hashCode() {

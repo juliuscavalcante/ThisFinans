@@ -1,8 +1,5 @@
 package com.programeiros.thisfinans.model.dto;
 
-import com.programeiros.thisfinans.model.entities.Account;
-import com.programeiros.thisfinans.model.entities.Transaction;
-import com.programeiros.thisfinans.model.entities.TransactionEntry;
 import com.programeiros.thisfinans.model.entities.User;
 import java.io.Serial;
 import java.io.Serializable;
@@ -27,20 +24,10 @@ public class TransactionEntryDTO implements Serializable {
     private UUID cod;
     private BigDecimal amount;
     private Instant entryDate;
-    private Instant createDate;
+    private Instant creationDate;
     private Instant updateDate;
-    private Transaction transaction;
-    private Account accountEntries;
-
-    public TransactionEntryDTO(TransactionEntry entity){
-        this.id = entity.getId();
-        this.cod = entity.getCod();
-        this.amount = entity.getAmount();
-        this.entryDate = entity.getEntryDate();
-        this.updateDate = entity.getUpdateDate();
-        this.transaction = entity.getTransaction();
-        this.accountEntries = entity.getAccountEntries();
-    }
+    private Long transactionId;
+    private Long accountId;
 
     @Override
     public int hashCode() {

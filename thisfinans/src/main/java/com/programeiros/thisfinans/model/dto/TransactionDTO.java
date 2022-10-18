@@ -1,7 +1,5 @@
 package com.programeiros.thisfinans.model.dto;
 
-import com.programeiros.thisfinans.model.entities.Account;
-import com.programeiros.thisfinans.model.entities.Transaction;
 import com.programeiros.thisfinans.model.entities.User;
 import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.enums.TransactionType;
@@ -11,7 +9,6 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,27 +29,10 @@ public class TransactionDTO implements Serializable {
     private TransactionType type;
     private TransactionStatus status;
     private BigDecimal amount;
-    private Boolean deleted;
     private Instant transactionDate;
-    private Instant createDate;
-    private Instant updateDate;
-    private Account accountTransactions;
-
+    private Long accountId;
     private List<TransactionEntryDTO> transactionEntries;
-
-    public TransactionDTO(Transaction entity) {
-        this.id = entity.getId();
-        this.cod = entity.getCod();
-        this.description = entity.getDescription();
-        this.type = entity.getType();
-        this.amount = entity.getAmount();
-        this.deleted = entity.getDeleted();
-        this.transactionDate = entity.getTransactionDate();
-        this.createDate = entity.getCreateDate();
-        this.updateDate = entity.getUpdateDate();
-        this.accountTransactions = entity.getAccountTransactions();
-        this.transactionEntries = entity.getTransactionEntries().stream().map(TransactionEntryDTO::new).collect(Collectors.toList());
-    }
+    private List<TransactionDaysDTO> transactionDays;
 
     @Override
     public int hashCode() {

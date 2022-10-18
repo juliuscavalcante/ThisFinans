@@ -2,6 +2,7 @@ package com.programeiros.thisfinans.model.entities;
 
 import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.enums.TransactionType;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -12,13 +13,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -66,19 +71,35 @@ public class Transaction implements Serializable {
     @Column(name = "transaction_date", nullable = false)
     private Instant transactionDate;
 
-    @Column(name = "create_date", nullable = false)
-    private Instant createDate;
+    @Column(name = "creation_date")
+    private Instant creationDate;
 
     @Column(name = "update_date", nullable = false)
     private Instant updateDate;
 
     @ManyToOne
     @JoinColumn(name = "account_fk")
-    private Account accountTransactions;
+    private Account account;
 
     @OneToMany(mappedBy = "transaction")
     @Setter(AccessLevel.NONE)
     private List<TransactionEntry> transactionEntries;
+
+    @OneToMany(mappedBy = "transaction")
+    @Setter(AccessLevel.NONE)
+    private List<TransactionDays> transactionDays;
+
+    @PrePersist
+    private void prePersist() {
+        deleted = Boolean.FALSE;
+        creationDate = Instant.now();
+        updateDate = Instant.now();
+    }
+
+    @PreUpdate
+    private void preUpdate() {
+        updateDate = Instant.now();
+    }
 
     @Override
     public int hashCode() {
