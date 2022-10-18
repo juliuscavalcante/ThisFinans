@@ -1,8 +1,7 @@
 package com.programeiros.thisfinans.model.entities;
 
-import com.fasterxml.jackson.annotation.*;
+import com.programeiros.thisfinans.model.dto.AccountDTO;
 import com.programeiros.thisfinans.model.enums.AccountType;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
@@ -19,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,24 +56,26 @@ public class Account implements Serializable {
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private Boolean deleted;
 
-    @Column(name = "creation_date", nullable = false)
-    private Instant creationDate;
+    @Column(name = "create_date", nullable = false)
+    private Instant createDate;
 
     @Column(name = "update_date")
     private Instant updateDate;
 
     @ManyToOne
     @JoinColumn(name = "user_fk")
-    @JsonIgnore
     private User user;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "accountTransactions")
     @Setter(AccessLevel.NONE)
     private List<Transaction> transactions;
 
-    @OneToMany(mappedBy = "account")
+    @OneToMany(mappedBy = "accountEntries")
     @Setter(AccessLevel.NONE)
     private List<TransactionEntry> transactionEntries;
+
+    public Account(AccountDTO accountDTO) {
+    }
 
     @Override
     public int hashCode() {
