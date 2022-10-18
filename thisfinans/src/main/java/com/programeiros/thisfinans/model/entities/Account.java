@@ -1,5 +1,6 @@
 package com.programeiros.thisfinans.model.entities;
 
+import com.programeiros.thisfinans.model.dto.AccountDTO;
 import com.programeiros.thisfinans.model.enums.AccountType;
 import java.io.Serial;
 import java.io.Serializable;
@@ -72,6 +73,9 @@ public class Account implements Serializable {
     @OneToMany(mappedBy = "accountEntries")
     @Setter(AccessLevel.NONE)
     private List<TransactionEntry> transactionEntries;
+
+    public Account(AccountDTO accountDTO) {
+    }
 
     @Override
     public int hashCode() {
