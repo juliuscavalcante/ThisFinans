@@ -1,5 +1,6 @@
 package com.programeiros.thisfinans.model.dto;
 
+import com.programeiros.thisfinans.model.entities.TransactionEntry;
 import com.programeiros.thisfinans.model.entities.User;
 import java.io.Serial;
 import java.io.Serializable;
@@ -28,6 +29,9 @@ public class TransactionEntryDTO implements Serializable {
     private Instant updateDate;
     private Long transactionId;
     private Long accountId;
+
+    public TransactionEntryDTO(TransactionEntry transactionEntry) {
+    }
 
     @Override
     public int hashCode() {
