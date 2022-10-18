@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/thisfinansdb
+    username: root
+    password: 1234567
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
