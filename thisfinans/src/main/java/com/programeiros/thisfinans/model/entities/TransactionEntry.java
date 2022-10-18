@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,8 +49,8 @@ public class TransactionEntry implements Serializable {
     @Column(name = "entry_date", nullable = false)
     private Instant entryDate;
 
-    @Column(name = "create_date", nullable = false)
-    private Instant createDate;
+    @Column(name = "creation_date")
+    private Instant creationDate;
 
     @Column(name = "update_date", nullable = false)
     private Instant updateDate;
@@ -60,7 +61,7 @@ public class TransactionEntry implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "account_fk")
-    private Account accountEntries;
+    private Account account;
 
     @Override
     public int hashCode() {

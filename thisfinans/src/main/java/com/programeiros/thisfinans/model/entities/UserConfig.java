@@ -1,21 +1,11 @@
 package com.programeiros.thisfinans.model.entities;
 
+import lombok.*;
+
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "user_configs")
@@ -37,13 +27,13 @@ public class UserConfig implements Serializable {
     @Column(name = "budget_closing_day", nullable = false, columnDefinition = "TINYINT", length = 1)
     private Integer budgetClosingDay;
 
-    @Column(name = "create_date", nullable = false)
-    private Instant createDate;
+    @Column(name = "creation_date", nullable = false)
+    private Instant creationDate;
 
     @Column(name = "update_date")
     private Instant updateDate;
 
-    @ManyToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_fk")
     private User user;
 

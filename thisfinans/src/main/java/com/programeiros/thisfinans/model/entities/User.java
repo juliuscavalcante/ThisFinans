@@ -1,10 +1,13 @@
 package com.programeiros.thisfinans.model.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.programeiros.thisfinans.model.enums.UserType;
+
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -15,7 +18,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -60,19 +65,19 @@ public class User implements Serializable {
     @Column(nullable = false, columnDefinition = "TINYINT", length = 1)
     private Boolean deleted;
 
-    @Column(name = "create_date", nullable = false)
-    private Instant createDate;
+    @Column(name = "creation_date", nullable = false)
+    private Instant creationDate;
 
     @Column(name = "update_date")
     private Instant updateDate;
 
     @OneToMany(mappedBy = "user")
     @Setter(AccessLevel.NONE)
+    @JsonIgnore
     private List<Account> accounts;
 
-    @OneToMany(mappedBy = "user")
-    @Setter(AccessLevel.NONE)
-    private List<UserConfig> userConfigs;
+    @OneToOne(mappedBy = "user")
+    private UserConfig userConfigs;
 
     @Override
     public int hashCode() {
