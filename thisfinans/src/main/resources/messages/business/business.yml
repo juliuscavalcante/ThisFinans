@@ -1,6 +1,0 @@
-account:
-  name:
-    rule:
-      nodeValue: 'No campo name somente é permitido o valor: business'
-      with:
-        params: 'Não é permitido digitar o valor: ´${value}´ no campo name'
