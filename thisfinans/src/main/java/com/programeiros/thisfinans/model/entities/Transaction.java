@@ -2,7 +2,6 @@ package com.programeiros.thisfinans.model.entities;
 
 import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.enums.TransactionType;
-
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -13,7 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +21,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -114,8 +111,8 @@ public class Transaction implements Serializable {
         if (obj == null) {
             return false;
         }
-        if (obj instanceof User) {
-            return ((User) obj).getCod().equals(getCod());
+        if (obj instanceof Transaction) {
+            return ((Transaction) obj).getCod().equals(getCod());
         }
         return false;
     }

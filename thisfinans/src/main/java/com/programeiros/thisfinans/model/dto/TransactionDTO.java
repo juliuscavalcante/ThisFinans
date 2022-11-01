@@ -1,5 +1,6 @@
 package com.programeiros.thisfinans.model.dto;
 
+import com.programeiros.thisfinans.model.entities.Transaction;
 import com.programeiros.thisfinans.model.entities.User;
 import com.programeiros.thisfinans.model.enums.TransactionStatus;
 import com.programeiros.thisfinans.model.enums.TransactionType;
@@ -33,6 +34,9 @@ public class TransactionDTO implements Serializable {
     private Long accountId;
     private List<TransactionEntryDTO> transactionEntries;
     private List<TransactionDaysDTO> transactionDays;
+
+    public TransactionDTO(Transaction transaction) {
+    }
 
     @Override
     public int hashCode() {
